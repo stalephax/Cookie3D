@@ -1,0 +1,73 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: COLLIDE - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\WIN98\TEMP\RSP73A1.TMP" with contents
+[
+/nologo /ML /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /FR"Release/" /Fp"Release/COLLIDE.pch" /YX /Fo"Release/" /Fd"Release/" /FD /c 
+"D:\ENG3DSRC\mainprog.c"
+]
+Creating command line "cl.exe @C:\WIN98\TEMP\RSP73A1.TMP" 
+Creating temporary file "C:\WIN98\TEMP\RSP73A2.TMP" with contents
+[
+glu32.lib opengl32.lib glut32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:no /pdb:"Release/COLLIDE.pdb" /machine:I386 /out:"Release/COLLIDE.exe" 
+.\Release\3D.OBJ
+.\Release\3DMATH.OBJ
+.\Release\ADDROT.OBJ
+.\Release\BSP3.OBJ
+.\Release\CCKFILE.OBJ
+.\Release\COLLIDE.OBJ
+.\Release\GENBALL.OBJ
+.\Release\mainprog.obj
+.\Release\MATMATH.OBJ
+.\Release\MOVE.OBJ
+.\Release\OBJECT.OBJ
+]
+Creating command line "link.exe @C:\WIN98\TEMP\RSP73A2.TMP"
+<h3>Output Window</h3>
+Compiling...
+mainprog.c
+D:\ENG3DSRC\mainprog.c(27) : warning C4142: benign redefinition of type
+D:\ENG3DSRC\mainprog.c(115) : warning C4101: 'rgbacolor' : unreferenced local variable
+D:\ENG3DSRC\mainprog.c(259) : warning C4101: 'i' : unreferenced local variable
+D:\ENG3DSRC\mainprog.c(734) : warning C4028: formal parameter 1 different from declaration
+D:\ENG3DSRC\mainprog.c(734) : warning C4024: 'glutKeyboardFunc' : different types for formal and actual parameter 1
+D:\ENG3DSRC\mainprog.c(735) : warning C4028: formal parameter 1 different from declaration
+D:\ENG3DSRC\mainprog.c(735) : warning C4024: 'glutKeyboardUpFunc' : different types for formal and actual parameter 1
+D:\ENG3DSRC\mainprog.c(638) : warning C4101: 'header' : unreferenced local variable
+D:\ENG3DSRC\mainprog.c(637) : warning C4101: 'buf' : unreferenced local variable
+D:\ENG3DSRC\mainprog.c(639) : warning C4101: 'filep' : unreferenced local variable
+D:\ENG3DSRC\mainprog.c(644) : warning C4101: 'i' : unreferenced local variable
+D:\ENG3DSRC\mainprog.c(644) : warning C4101: 'j' : unreferenced local variable
+D:\ENG3DSRC\mainprog.c(636) : warning C4101: 'SVtexty' : unreferenced local variable
+D:\ENG3DSRC\mainprog.c(636) : warning C4101: 'SVtextx' : unreferenced local variable
+Linking...
+Creating temporary file "C:\WIN98\TEMP\RSP73B1.TMP" with contents
+[
+/nologo /o"Release/COLLIDE.bsc" 
+.\Release\3D.SBR
+.\Release\3DMATH.SBR
+.\Release\ADDROT.SBR
+.\Release\BSP3.SBR
+.\Release\CCKFILE.SBR
+.\Release\COLLIDE.SBR
+.\Release\GENBALL.SBR
+.\Release\mainprog.sbr
+.\Release\MATMATH.SBR
+.\Release\MOVE.SBR
+.\Release\OBJECT.SBR]
+Creating command line "bscmake.exe @C:\WIN98\TEMP\RSP73B1.TMP"
+Creating browse info file...
+<h3>Output Window</h3>
+
+
+
+<h3>Results</h3>
+COLLIDE.exe - 0 error(s), 14 warning(s)
+</pre>
+</body>
+</html>

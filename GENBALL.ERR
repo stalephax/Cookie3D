@@ -1,0 +1,4 @@
+genball.c(24): Warning! W202: Symbol 'OutputFile' has been defined, but not referenced
+genball.c(109): Warning! W301: No prototype found for 'AppendRotationZ'
+genball.c(108): Warning! W301: No prototype found for 'AppendRotationY'
+genball.c(125): Warning! W301: No prototype found for 'XformVec'

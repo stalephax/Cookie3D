@@ -1,0 +1,55 @@
+# Makefile for 3d ENGINE DEMO using Watcom C 10.6 (DOS4GW 32 bit DOS)  
+# (c) 1997 Erwin Coumans, coockie@stack.nl
+#
+COMPILER = wcc386
+#LINKER = wlink OP STack= 65536  system pmodew file 
+LINKER2 = wlink  OP STack= 65536  file 
+
+WLIB = wlib -n test.lib
+WLIB2 = wlib test.lib
+
+#with debugging
+#COMPOPTIONS = /fp5 /5r /ox /w5 /d2 
+#without debugging
+COMPOPTIONS = /fp5 /5r /ox  /w5 /e512
+
+# pmodew doesn't handle VESA selecter (hangs)
+# pmain.exe : pmain.obj move.obj test.lib
+#        $(LINKER) pmain.obj,move.obj Library test.lib Library svga.lib Library pmode.lib Library ztimer.lib
+
+cckmain.exe : cckmain.obj move.obj test.lib
+        $(LINKER2) cckmain.obj,move.obj Library test.lib Library svga.lib Library pmode.lib Library ztimer.lib
+
+test.lib : bsp3.obj 3d.obj 3dmath.obj cckfile.obj cckvideo.obj keyboard.obj collide.obj object.obj genball.obj addrot.obj matmath.obj
+        $(WLIB) +bsp3.obj +3d.obj +3dmath.obj +cckfile.obj +cckvideo.obj +keyboard.obj +collide.obj 
+        $(WLIB2) +object.obj +genball.obj +addrot.obj +matmath.obj 
+
+pmain.obj : pmain.c
+        $(COMPILER) $(COMPOPTIONS)  pmain.c 
+cckmain.obj : cckmain.c
+        $(COMPILER) $(COMPOPTIONS)  cckmain.c 
+
+bsp3.obj : bsp3.c
+        $(COMPILER) $(COMPOPTIONS)  bsp3.c 
+cckfile.obj  : cckfile.c
+         $(COMPILER) $(COMPOPTIONS)  cckfile.c
+cckvideo.obj  : cckvideo.c
+         $(COMPILER) $(COMPOPTIONS)  cckvideo.c
+keyboard.obj : keyboard.c
+         $(COMPILER) $(COMPOPTIONS)  keyboard.c
+3dmath.obj : 3dmath.c          
+        $(COMPILER) $(COMPOPTIONS)  3dmath.c
+3d.obj : 3d.c        
+        $(COMPILER) $(COMPOPTIONS)  3d.c
+collide.obj : collide.c
+        $(COMPILER) $(COMPOPTIONS)  collide.c 
+move.obj : move.c
+        $(COMPILER) $(COMPOPTIONS)  move.c 
+object.obj : object.c
+        $(COMPILER) $(COMPOPTIONS)  object.c
+genball.obj : genball.c
+        $(COMPILER) $(COMPOPTIONS)  genball.c
+addrot.obj : addrot.c
+        $(COMPILER) $(COMPOPTIONS)  addrot.c
+matmath.obj : matmath.c
+        $(COMPILER) $(COMPOPTIONS)  matmath.c

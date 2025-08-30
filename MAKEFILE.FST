@@ -1,0 +1,49 @@
+# 3D Makefile  
+
+COMPILER = wcc386
+LINKER = wlink OP STack= 65536  system pmodew file 
+LINKER2 = wlink  OP STack= 65536  file 
+
+WLIB = wlib -n test.lib
+WLIB2 = wlib test.lib
+
+#COMPOPTIONS = /fp5 /5r /ox /w5 /d2 
+COMPOPTIONS = /fp5 /5r /ox /w5 /e512 
+
+pmain.exe : pmain.obj move.obj test.lib
+        $(LINKER) pmain.obj,move.obj Library test.lib Library svga.lib Library pmode.lib Library ztimer.lib
+wmain.exe : wmain.obj move.obj test.lib
+        $(LINKER2) wmain.obj,move.obj Library test.lib Library svga.lib Library pmode.lib Library ztimer.lib
+
+test.lib : bsp3.obj 3d.obj 3dmath.obj pcx.obj keyboard.obj collide.obj object.obj genball.obj addrot.obj matmath.obj
+        $(WLIB) +bsp3.obj +3d.obj +3dmath.obj +pcx.obj +keyboard.obj +collide.obj 
+        $(WLIB2) +object.obj +genball.obj +addrot.obj +matmath.obj 
+
+pmain.obj : pmain.c
+        $(COMPILER) $(COMPOPTIONS)  pmain.c 
+wmain.obj : wmain.c
+        $(COMPILER) $(COMPOPTIONS)  wmain.c 
+
+bsp3.obj : bsp3.c
+        $(COMPILER) $(COMPOPTIONS)  bsp3.c 
+pcx.obj  : pcx.c
+         $(COMPILER) $(COMPOPTIONS)  pcx.c
+keyboard.obj : keyboard.c         
+         $(COMPILER) $(COMPOPTIONS)  keyboard.c
+3dmath.obj : 3dmath.c          
+        $(COMPILER) $(COMPOPTIONS)  3dmath.c
+3d.obj : 3d.c        
+        $(COMPILER) $(COMPOPTIONS)  3d.c
+collide.obj : collide.c
+        $(COMPILER) $(COMPOPTIONS)  collide.c 
+move.obj : move.c
+        $(COMPILER) $(COMPOPTIONS)  move.c 
+object.obj : object.c
+        $(COMPILER) $(COMPOPTIONS)  object.c
+
+genball.obj : genball.c
+        $(COMPILER) $(COMPOPTIONS)  genball.c
+addrot.obj : addrot.c
+        $(COMPILER) $(COMPOPTIONS)  addrot.c
+matmath.obj : matmath.c
+        $(COMPILER) $(COMPOPTIONS)  matmath.c

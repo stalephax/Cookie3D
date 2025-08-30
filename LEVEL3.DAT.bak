@@ -1,0 +1,752 @@
+/sample to demonstrate 3d engine
+/by coockie@stack.nl
+/last updates on www.stack.nl/~coockie
+/this is only a simple format
+/syntax:
+/ (x y z are worldcoordinates)
+/
+/Startposition x y z
+/
+/Texture <pcxname> 
+/(256x256 mipmapped pcx)
+/Polygon <texturenumber>
+/Vertex x y z u v       
+/x y z are coordinates, u and v are texture coordinates 
+/ u and v are not used at the moment so texels are always same size in
+/worldspace (they are automaticly calculated from worldspace coords)
+/in future they will be used to align textures
+/first vertex has u = 0 and v = 0 
+/
+/line starting with '/' is comment
+/
+/don't add empty lines 
+/
+/
+/
+StartPosition 0 -600 320
+Texture pcx\cloud16.pcx
+Texture pcx\floor1.pcx
+Texture pcx\wood1.pcx
+Texture pcx\wall2.pcx
+Texture pcx\egypt2.pcx
+Texture pcx\sand1.pcx
+Texture pcx\wall3.pcx
+Texture pcx\wall1.pcx
+Texture pcx\floweryt.pcx
+/sky
+/Object 1
+/QPolygon  0
+/MVertex  -200000  -200000  6000  0  0 
+/MVertex  200000  -200000  6000  4096  0 
+/MVertex  200000  200000  6000  4096  4096 
+/MVertex  -200000  200000  6000  0  4096 
+/Polygon  0 1
+/Vertex  -200000  -200000  6000  0  0 
+/Vertex  200000  -200000  6000  4096  0 
+/Vertex  200000  200000  6000  4096  4096 
+/Vertex  -200000  200000  6000  0  4096 
+/
+/floor
+Polygon  1
+Vertex  -3000  -3000 0  0  0 
+Vertex  -3000  3000 0  8191  0 
+Vertex  3000  3000  0  8191 8191 
+Vertex  3000  -3000  0  0  8191
+/1
+Polygon  2 
+Vertex  -2600  0  327           0  2 
+Vertex  -1200  1400  327        2550 2
+Vertex  -1200  1400  0         2550 255 
+Vertex  -2600  0  0          0 255
+/2
+Polygon  2 
+Vertex  -1200  1400  327        0 2 
+Vertex  -800  2400  327       2550 2
+Vertex  -800  2400  0           2550 255 
+Vertex  -1200  1400  0          0 255
+/3
+Polygon  2 
+Vertex  -800  2400  327         0  2 
+Vertex  3000  0  327         2550 2 
+Vertex  3000  0  0            2550 255 
+Vertex  -800  2400  0           0  255 
+//4
+//5
+Polygon  2           
+Vertex  3000  00  327        0  2 
+Vertex  0  -2200  327          2550 2 
+Vertex  0  -2200  0             2550 255 
+Vertex  3000  00  0          0  255 
+/6
+Polygon  2 
+Vertex  0  -2200 327            0  2 
+Vertex  -600  -3000  327        2550 2 
+Vertex  -600  -3000  0          2550 255 
+Vertex  0  -2200  0             0  255 
+///7
+Polygon  2 
+Vertex  -600  -3000  327        0  2 
+Vertex  -1200  -1600  327       2550 2 
+Vertex  -1200  -1600  0         2550 255 
+Vertex  -600  -3000  0          0 255
+/8
+Polygon  2 
+Vertex  -1200  -1600  327      0  2 
+Vertex  -1800  -1600  327      2550 2 
+Vertex  -1800  -1600  0        2550 255 
+Vertex  -1200  -1600  0        0   255     
+/9
+Polygon  2              
+Vertex  -1800  -1600  327      0  2 
+Vertex  -2600  0  327       2550 2 
+Vertex  -2600  0  0            2550 255 
+Vertex  -1800  -1600  0        0  255 
+/castle
+/c1
+Polygon  7 2
+Vertex  300  100  0  0  0
+Vertex  340  60  40  254  51 
+Vertex  340  -60  40  254  205 
+Vertex  300  -100  0  0  254 
+/c2
+Polygon  7 2
+Vertex  500  100  0  0  0 
+Vertex  460  60  40  254  51 
+Vertex  340  60  40  254  205 
+Vertex  300  100  0  0  254 
+//c3
+Polygon  7 2
+Vertex  500  -100  0  0  0 
+Vertex  460  -60  40  254  51 
+Vertex  460  60  40  254  205 
+Vertex  500  100  0  0  254 
+//c4
+Polygon  7  2
+Vertex  300  -100  0  0  0 
+Vertex  340  -60  40  254  51 
+Vertex  460  -60  40  254  205 
+Vertex  500  -100  0  0  254 
+/c5
+Polygon  7 2
+Vertex  340  60  40  0  0 
+Vertex  340  60  400  1023  0 
+Vertex  340  -60  400  1023  254 
+Vertex  340  -60  40  0  254 
+/c6
+Polygon  7 2
+Vertex  460  60  40  0  0 
+Vertex  460  60  400  1023  0 
+Vertex  340  60  400  1023  254 
+Vertex  340  60  40  0  254 
+/c7
+Polygon  7 2
+Vertex  460  -60  40  0  0 
+Vertex  460  -60  400  1023  0 
+Vertex  460  60  400  1023  254 
+Vertex  460  60  40  0  254 
+/c8
+Polygon  7 2
+Vertex  340  -60  40  0  0 
+Vertex  340  -60  400  1023  0 
+Vertex  460  -60  400  1023  254 
+Vertex  460  -60  40  0  254 
+Polygon  7 2
+Vertex  340  -60  400  0  0 
+Vertex  340  60  400  254  0 
+Vertex  460  60  400  254 254 
+Vertex  460  -60  400  0  254 
+//??
+/cap
+/ttt13
+Polygon  7 
+Vertex  400  0  500  0  127 
+Vertex  340   -60  400  127 0 
+Vertex  340  60  400  127 255 
+/ttt14
+Polygon  7 
+Vertex  400  0  500  0  127 
+Vertex  460   -60  400  127 0
+Vertex  340   -60  400  127 255
+/ttt15
+Polygon  7 
+Vertex  400  0  500  0  127 
+Vertex  460   60  400  127 0
+Vertex  460   -60  400  127 255
+Polygon  7 
+Vertex  400  0  500  0  127 
+Vertex  340   60  400  127 0
+Vertex  460   60  400  127 255
+//??
+/driehoek
+/Polygon  3 
+/Vertex  -200  0  0  0  0 
+/Vertex  -200  0  150  150  0 
+/Vertex  -200  50  150  150  50 
+/castle  2nd floor 
+Polygon  7 
+Vertex  -200  -200 150          0  0 
+Vertex  -200   200 150          511  0 
+Vertex  200    200  150           511  511 
+Vertex  200   -200  150          0  511 
+Polygon  3 
+Vertex  200   -200  140          0  0 
+Vertex  200    200  140           511  0
+Vertex  -200   200 140          511  511
+Vertex  -200  -200 140          0  511
+Polygon  7 
+Vertex  -50   -200  150          0  0 
+Vertex  50    -200  150           255  0
+Vertex  50   -200 140          255  15
+Vertex  -50  -200 140          0  15
+/castle  floor
+Polygon  5 
+Vertex  -200  -190 5          0  0 
+Vertex  -200   200 5          511  0 
+Vertex  200    200  5           511  511 
+Vertex  200   -190  5          0  511 
+Polygon  5 
+Vertex  -50   -190  5          0  0 
+Vertex  50    -190  5           255  0
+Vertex  50   -200 0          255  15
+Vertex  -50  -200 0          0  15
+/w1
+Polygon  3 
+Vertex  -150  190  0  0  0 
+Vertex  -150  190  150  254  0 
+Vertex  150  190  150  254  254 
+Vertex  150  190  0  0  254 
+/w2
+Polygon  7 
+Vertex  150  200  0  0  0 
+Vertex  150  200  150  254  0 
+Vertex  -150  200  150  254  254 
+Vertex  -150  200  0  0  254 
+/w3
+Polygon  3 
+Vertex  190  150  0  0  0 
+Vertex  190  150  150  254  0 
+Vertex  190  -150  150  254  254 
+Vertex  190  -150  0  0  254 
+/w4
+Polygon  7 
+Vertex  200  -150  0  0  0 
+Vertex  200  -150  150  254  0 
+Vertex  200  150  150  254  254 
+Vertex  200  150  0  0  254 
+/w5
+Polygon  7 
+Vertex  50  -200  0  0  0 
+Vertex  50  -200  150  254  0 
+Vertex  150  -200  150  254  254 
+Vertex  150  -200  0  0  254 
+/w6
+Polygon  3 
+Vertex  150  -190  0  0  0 
+Vertex  150  -190  150  254  0 
+Vertex  50  -190  150  254  254 
+Vertex  50  -190  0  0  254 
+/w7
+Polygon  3 
+Vertex  50  -190  150  0  0 
+Vertex  50  -200  150  15 0 
+Vertex  50  -200  0    15  254 
+Vertex  50  -190  0     0  254 
+/w8
+Polygon  7 
+Vertex  -150  -200  0  0  0 
+Vertex  -150  -200  150  254  0 
+Vertex  -50  -200  150  254  254 
+Vertex  -50  -200  0  0  254 
+/w9
+Polygon  3 
+Vertex  -50  -190  0  0  0 
+Vertex  -50  -190  150  254  0 
+Vertex  -150  -190  150  254  254 
+Vertex  -150  -190  0  0  254 
+/w10  fout3
+Polygon  3 
+Vertex  -50  -200  150  0  0 
+Vertex  -50  -190  150  15 0 
+Vertex  -50  -190  0    15 254 
+Vertex  -50  -200  0    0  254 
+/w11
+Polygon  7 
+Vertex  -200  150  0  0  0 
+Vertex  -200  150  150  254  0 
+Vertex  -200  -150  150  254  254 
+Vertex  -200  -150  0  0  254 
+/w12
+Polygon  3 
+Vertex  -190  -150  0  0  0 
+Vertex  -190  -150  150  254  0 
+Vertex  -190  150  150  254  254 
+Vertex  -190  150  0  0  254 
+/t1
+Polygon  3 
+Vertex  -225  225  0  0  0 
+Vertex  -225  225  200  254  0 
+Vertex  -225  150  200  254  254 
+Vertex  -225  150  0  0  254 
+/t2
+Polygon  3 
+Vertex  -150  225  0  0  0 
+Vertex  -150  225  200  254  0 
+Vertex  -225  225  200  254  254 
+Vertex  -225  225  0  0  254 
+/t3
+Polygon  3 
+Vertex  -150  150  0  0  0 
+Vertex  -150  150  200  254  0 
+Vertex  -150  225  200  254  254 
+Vertex  -150  225  0  0  254 
+/t4
+Polygon  3 
+Vertex  -225  150  0  0  0 
+Vertex  -225  150  200  254  0 
+Vertex  -150  150  200  254  254 
+Vertex  -150  150  0  0  254 
+/t5
+Polygon  3 
+Vertex  150  225  0  0  0 
+Vertex  150  225  200  254  0 
+Vertex  150  150  200  254  254 
+Vertex  150  150  0  0  254 
+/t6
+Polygon  3 
+Vertex  225  225  0  0  0 
+Vertex  225  225  200  254  0 
+Vertex  150  225  200  254  254 
+Vertex  150  225  0  0  254 
+/t7
+Polygon  3 
+Vertex  225  150  0  0  0 
+Vertex  225  150  200  254  0 
+Vertex  225  225  200  254  254 
+Vertex  225  225  0  0  254 
+/t8
+Polygon  3 
+Vertex  150  150  0  0  0 
+Vertex  150  150  200  254  0 
+Vertex  225  150  200  254  254 
+Vertex  225  150  0  0  254 
+/t9
+Polygon  3 
+Vertex  150  -150  0  0  0 
+Vertex  150  -150  200  254  0 
+Vertex  150  -225  200  254  254 
+Vertex  150  -225  0  0  254 
+/t10
+Polygon  3 
+Vertex  225  -150  0  0  0 
+Vertex  225  -150  200  254  0 
+Vertex  150  -150  200  254  254 
+Vertex  150  -150  0  0  254 
+/t11
+Polygon  3 
+Vertex  225  -225  0  0  0 
+Vertex  225  -225  200  254  0 
+Vertex  225  -150  200  254  254 
+Vertex  225  -150  0  0  254 
+/t12
+Polygon  3 
+Vertex  150  -225  0  0  0 
+Vertex  150  -225  200  254  0 
+Vertex  225  -225  200  254  254 
+Vertex  225  -225  0  0  254 
+/t13
+Polygon  3 
+Vertex  -225  -150  0  0  0 
+Vertex  -225  -150  200  254  0 
+Vertex  -225  -225  200  254  254 
+Vertex  -225  -225  0  0  254 
+/t14
+Polygon  3 
+Vertex  -150  -150  0  0  0 
+Vertex  -150  -150  200  254  0 
+Vertex  -225  -150  200  254  254 
+Vertex  -225  -150  0  0  254 
+/t15
+Polygon  3 
+Vertex  -150  -225  0  0  0 
+Vertex  -150  -225  200  254  0 
+Vertex  -150  -150  200  254  254 
+Vertex  -150  -150  0  0  254 
+/t16
+Polygon  3 
+Vertex  -225  -225  0  0  0 
+Vertex  -225  -225  200  254  0 
+Vertex  -150  -225  200  254  254 
+Vertex  -150  -225  0  0  254 
+/tower
+/tt1
+Polygon  3 
+Vertex  -225  150  200  0  75 
+Vertex  -225  225  200  0  0 
+Vertex  -188  188  300  100  38 
+/tt2
+Polygon  3 
+Vertex  -225  225  200  0  75 
+Vertex  -150  225  200  0  0 
+Vertex  -188  188  300  100  38 
+/tt3
+Polygon  3 
+Vertex  -150  225  200  0  75 
+Vertex  -150  150  200  0  0 
+Vertex  -188  188  300  100  38 
+/tt4
+Polygon  3 
+Vertex  -150  150  200  0  75 
+Vertex  -225  150  200  0  0 
+Vertex  -188  188  300  100  38 
+/cap2
+/tt5
+Polygon  3 
+Vertex  150  150  200  0  75 
+Vertex  150  225  200  0  0 
+Vertex  187  188  300  100  38 
+/tt6
+Polygon  3 
+Vertex  150  225  200  0  75 
+Vertex  225  225  200  0  0 
+Vertex  187  188  300  100  38 
+/tt7
+Polygon  3 
+Vertex  225  225  200  0  75 
+Vertex  225  150  200  0  0 
+Vertex  187  188  300  100  38 
+/tt8
+Polygon  3 
+Vertex  225  150  200  0  75 
+Vertex  150  150  200  0  0 
+Vertex  187  188  300  100  38 
+/cap3
+/tt9
+Polygon  3 
+Vertex  150  -225  200  0  75 
+Vertex  150  -150  200  0  0 
+Vertex  187  -187  300  100  38 
+/tt10
+Polygon  3 
+Vertex  150  -150  200  0  75 
+Vertex  225  -150  200  0  0 
+Vertex  187  -187  300  100  38 
+/tt11
+Polygon  3 
+Vertex  225  -150  200  0  75 
+Vertex  225  -225  200  0  0 
+Vertex  187  -187  300  100  38 
+/tt12
+Polygon  3 
+Vertex  225  -225  200  0  75 
+Vertex  150  -225  200  0  0 
+Vertex  187  -187  300  100  38 
+/cap4
+/tt13
+Polygon  3 
+Vertex  -225  -225  200  0  75 
+Vertex  -225  -150  200  0  0 
+Vertex  -188  -187  300  100  38 
+/tt14
+Polygon  3 
+Vertex  -225  -150  200  0  75 
+Vertex  -150  -150  200  0  0 
+Vertex  -188  -187  300  100  38 
+/tt15
+Polygon  3 
+Vertex  -150  -150  200  0  75 
+Vertex  -150  -225  200  0  0 
+Vertex  -188  -187  300  100  38 
+/tt16
+Polygon  3 
+Vertex  -150  -225  200  0  75 
+Vertex  -225  -225  200  0  0 
+Vertex  -188  -187  300  100  38 
+//bridge
+/b1
+Polygon  3 
+Vertex  280  -30  200  0  0 
+Vertex  340  -50  200  60  0 
+Vertex  340  -50  60  60  140 
+Vertex  280  -30  190  0  10 
+/b21
+Polygon  3 
+Vertex  280  30  190  0  10 
+Vertex  340  50  60  60  140 
+Vertex  340  50  200  60  0 
+Vertex  280  30  200  0  0 
+//b3
+Polygon  3 
+Vertex  280  30  200  0  20 
+Vertex  340  50  200  60  0 
+Vertex  340  -50  200  60  100 
+Vertex  280  -30  200  0  80 
+//b4
+Polygon  3 2
+Vertex  340  50  60     0   0 
+Vertex  280  30  190    254  51 
+Vertex  280  -30  190   254  204 
+Vertex  340  -50  60    0    254 
+//b5
+Polygon  3 
+Vertex  50  -70  0  0  0 
+Vertex  50  -70  300  0  300 
+Vertex  150  -70  300  100  300 
+Vertex  150  -70  190  100  190 
+Vertex  75  -70  0  25  0 
+//b6
+Polygon  3 
+Vertex  75  70  0  25  0 
+Vertex  150  70  190  100  190 
+Vertex  150  70  300  100  300 
+Vertex  50  70  300  0  300 
+Vertex  50  70  0  0  0 
+//b7
+Polygon  6 
+Vertex  50  70  0  0  0 
+Vertex  50  70  150  254  0 
+Vertex  50  -70  150  254  254 
+Vertex  50  -70  0  0  254 
+Polygon  3 
+Vertex  50  70  150  0  0 
+Vertex  50  70  300  254  0 
+Vertex  50  -70  300  254  254 
+Vertex  50  -70  150  0  254 
+//b9
+Polygon  3 
+Vertex  150  -70  190  0  0 
+Vertex  150  -70  300  254  0 
+Vertex  150  70  300  254  254 
+Vertex  150  70  190  0  254 
+//b10
+Polygon  3 
+Vertex  75  -70  0  0  0 
+Vertex  150  -70  190  254  0 
+Vertex  150  70  190  254  254 
+Vertex  75  70  0  0  254 
+//b11
+Polygon  3 
+Vertex  150  30  200  0  0 
+Vertex  280  30  200  254  0 
+Vertex  280  -30  200  254  128 
+Vertex  150  -30  200  0  128 
+//b12
+Polygon  3 
+Vertex  150  -30  190  0  0 
+Vertex  280  -30  190  254  0 
+Vertex  280  30  190  254  128 
+Vertex  150  30  190  0  128 
+//b13
+Polygon  3 
+Vertex  280  30  200  0  0 
+Vertex  150  30  200  254  0 
+Vertex  150  30  190  254  15 
+Vertex  280  30  190  0 15 
+//b14
+Polygon  3 
+Vertex  150  -30  200  0  0 
+Vertex  280  -30  200  254  0 
+Vertex  280  -30  190  254  15 
+Vertex  150  -30  190  0  15 
+//
+//top1
+Polygon  3 
+Vertex  25  95  350  0  0 
+Vertex  175  95  350  254  0 
+Vertex  175  -95  350  254  254 
+Vertex  25  -95  350  0  254 
+//top fout2???
+Polygon  3 
+Vertex  25  -95  350  0  0 
+Vertex  175  -95  350  0 127  
+Vertex  150  -70  300  50 103 
+Vertex  50  -70  300  50  26 
+//top3
+Polygon  3 
+Vertex  25  95  350  0  0 
+Vertex  25  -95  350  0  127 
+Vertex  50  -70  300  50  103 
+Vertex  50  70  300  50  26 
+//top
+Polygon  3 
+Vertex  175  95  350  0  0 
+Vertex  25  95  350  0  127 
+Vertex  50  70  300  50  103 
+Vertex  150  70  300  50  26 
+//
+Polygon  3 
+Vertex  175  -95  350  0  0 
+Vertex  175  95  350  0  127 
+Vertex  150  70  300  50 103 
+Vertex  150  -70  300  50 26
+/middle
+/ttt1
+Polygon  3 
+Vertex  25  -95  350  0  75 
+Vertex  25  -45  350  0  0 
+Vertex  50  -70  450  100  38 
+/ttt2
+Polygon  3 
+Vertex  25  -45  350  0  75 
+Vertex  75  -45  350  0  0 
+Vertex  50  -70  450  100  38 
+/ttt3
+Polygon  3 
+Vertex  75  -45  350  0  75 
+Vertex  75  -95  350  0  0 
+Vertex  50  -70  450  100  38 
+/ttt4
+Polygon  3 
+Vertex  75  -95  350  0  75 
+Vertex  25  -95  350  0  0 
+Vertex  50  -70  450  100  38 
+//
+/ttt5
+Polygon  3 
+Vertex  25  45  350  0  75 
+Vertex  25  95  350  0  0 
+Vertex  50  70  450  100  38 
+/ttt6
+Polygon  3 
+Vertex  25  95  350  0  75 
+Vertex  75  95  350  0  0 
+Vertex  50  70  450  100  38 
+/ttt7
+Polygon  3 
+Vertex  75  95  350  0  75 
+Vertex  75  45  350  0  0 
+Vertex  50  70  450  100  38 
+/ttt8
+Polygon  3 
+Vertex  75  45  350  0  75 
+Vertex  25  45  350  0  0 
+Vertex  50  70  450  100  38 
+//
+/ttt9
+Polygon  3 
+Vertex  125  45  350  0  75 
+Vertex  125  95  350  0  0 
+Vertex  150  70  450  100  38 
+/ttt10
+Polygon  3 
+Vertex  125  95  350  0  75 
+Vertex  175  95  350  0  0 
+Vertex  150  70  450  100  38 
+/ttt11
+Polygon  3 
+Vertex  175  95  350  0  75 
+Vertex  175  45  350  0  0 
+Vertex  150  70  450  100  38 
+/ttt12
+Polygon  3 
+Vertex  175  45  350  0  75 
+Vertex  125  45  350  0  0 
+Vertex  150  70  450  100  38 
+/cap
+/ttt13
+Polygon  3 
+Vertex  125  -95  350  0  75 
+Vertex  125  -45  350  0  0 
+Vertex  150  -70  450  100  38 
+/ttt14
+Polygon  3 
+Vertex  125  -45  350  0  75 
+Vertex  175  -45  350  0  0 
+Vertex  150  -70  450  100  38 
+/ttt15
+Polygon  3 
+Vertex  175  -45  350  0  75 
+Vertex  175  -95  350  0  0 
+Vertex  150  -70  450  100  38 
+/ttt16
+Polygon  3 
+Vertex  175  -95  350  0  75 
+Vertex  125  -95  350  0  0 
+Vertex  150  -70  450  100  38
+/pyramide
+Polygon  4 2
+Vertex  1600  0  800   
+Vertex  800  -400  0  
+Vertex  800  400  0
+Polygon  4 2
+Vertex  1600  0  800   
+Vertex  800  400  0
+Vertex  2300  400  0
+Polygon  4 2
+Vertex  1600  0  800   
+Vertex  2300  400  0
+Vertex 2300 -400 0
+Polygon  4 2
+Vertex  1600  0  800   
+Vertex 2300 -400 0
+Vertex 800 -400 0
+/
+/airbridge (just to show collision detection) 
+/
+Polygon  5
+Vertex 200 -580 280
+Vertex 200 -620 280
+Vertex -800 -620 300
+Vertex -800  -580  300   
+Polygon  5
+Vertex -800  -590  340
+Vertex -800 -610 340
+Vertex 200 -610 340
+Vertex 200 -590 340
+/
+Polygon  5
+Vertex -800  -580  309.5
+Vertex -800 -580 310
+Vertex 200 -580 290 
+Vertex 200 -580 289.5
+Polygon  5
+Vertex 200 -620 289.5
+Vertex 200 -620 290
+Vertex -800 -620 310
+Vertex -800  -620  309.5
+/
+Polygon  5
+Vertex -800  -580  319.5
+Vertex -800 -580 320
+Vertex 200 -580 300 
+Vertex 200 -580 299.5
+Polygon  5
+Vertex 200 -620 299.5
+Vertex 200 -620 300
+Vertex -800 -620 320
+Vertex -800  -620  319.5
+/
+Polygon  5
+Vertex 200 -580 280
+Vertex 600 -580 0
+Vertex 600 -620 0
+Vertex 200 -620 280
+Polygon  5
+Vertex 200 -610 340
+Vertex 580 -610 60
+Vertex 580 -590 60
+Vertex 200 -590 340
+Polygon  5
+Vertex 200 -580 290
+Vertex 600 -580 10
+Vertex 600 -580 9.5
+Vertex 200 -580 289.5
+Polygon  5
+Vertex 200 -580 300
+Vertex 600 -580 20
+Vertex 600 -580 19.5
+Vertex 200 -580 299.5
+Polygon  5
+Vertex 200 -620 289.5
+Vertex 600 -620 9.5
+Vertex 600 -620 10
+Vertex 200 -620 290
+Polygon  5
+Vertex 200 -620 299.5
+Vertex 600 -620 19.5
+Vertex 600 -620 20
+Vertex 200 -620 300
+/Polygon  5
+/Vertex 580 -610 60
+/Vertex 580 -590 60
+/Vertex 600 -580 0
+/Vertex 600 -620 0
