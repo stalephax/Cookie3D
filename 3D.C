@@ -1,11 +1,11 @@
-#include "3d.h"
-#include "3dmath.h"
-#include "ggems.h"
-#include "move.h" /* gravitationspeed */
-#include "pmode.h"
-#include "cckfile.h"
-#include "cckvideo.h"
-#include "global.h"
+#include "3D.H"
+#include "3DMATH.H"
+#include "GGEMS.H"
+#include "MOVE.H" /* gravitationspeed */
+#include "PMODE.H"
+#include "CCKFILE.H"
+#include "CCKVIDEO.H"
+#include "GLOBAL.H"
 unsigned char  *pcxtexture;
 
 #define FIELD_OF_VIEW 1.75
@@ -293,13 +293,9 @@ short           OldFPUCW, FPUCW;
 
 void   fpu32()
 {
-	_asm { fstcw[OldFPUCW]
-		 mov ax, OldFPUCW
-	 and eax, 0xcff
-	 mov[FPUCW], ax
-	 fldcw[FPUCW]
-		//modify [EAX];]
-	}
+	/* Modern compilers do not support the original inline x87 asm.
+	 * Keep this hook as a no-op so rendering code remains unchanged.
+	 */
 }
 //#pragma aux fpu32 = \
 //   "fstcw [OldFPUCW]"\
@@ -311,7 +307,7 @@ void   fpu32()
 //
 void            fpu64()
 {
-	_asm fldcw [OldFPUCW]
+	/* See fpu32(): legacy FPU control handling is intentionally disabled. */
 }
 //#pragma aux fpu64 = \
 //   "fldcw [OldFPUCW]";
@@ -321,8 +317,7 @@ void            fpu64()
  * 0x43,al" \ "mov al,2" \ "out 0x40,al" \ "mov al,2" \ "out 0x40,al" \
  */
 
-
-#define    ASMDEEL  _asm fld1  _asm fdiv cc  _asm fstp cinv
+#define    ASMDEEL  (cinv = 1.0f / cc)
 
 
 
@@ -335,8 +330,7 @@ void            fpu64()
 
 void            deel1()
 {
-  _asm fld1
-  _asm fdiv cc
+	cinv = 1.0f / cc;
 }
 
 //#pragma aux deel1 = \
@@ -346,7 +340,7 @@ void            deel1()
 
 void            deel2()
 {
-	_asm fstp cinv
+	/* No-op: deel1() directly updates cinv in the modern path. */
 }
 //#pragma aux deel2 = \
 //  "fstp cinv" \
@@ -354,14 +348,9 @@ void            deel2()
 
 void            updateuv0()
 {
-	_asm fld sixtyfive
-	_asm fmul cinv
-	_asm fld st
-	_asm fmul aa
-   _asm fistp u0
-	_asm fmul bb
-   _asm fistp v0
-
+	double scale = sixtyfive * cinv;
+	u0 = (long) (aa * scale);
+	v0 = (long) (bb * scale);
 }
 /*
 #pragma aux updateuv0 = \
@@ -375,14 +364,9 @@ void            updateuv0()
 */
 void            updateuv1()
 {
-   _asm fld sixtyfive
-   _asm fmul cinv
-   _asm fld st
-   _asm fmul aa
-   _asm fistp u1
-   _asm fmul bb
-   _asm fistp v1
-
+	double scale = sixtyfive * cinv;
+	u1 = (long) (aa * scale);
+	v1 = (long) (bb * scale);
 }
 //#pragma aux updateuv1 = \
 //   "fld sixtyfive" \
@@ -394,21 +378,13 @@ void            updateuv1()
 //   "fistp v1" \
 //
 
+static unsigned int tex_u_acc;
+static unsigned int tex_v_acc;
+
 void            initfasttex1()
 {
-           _asm mov   eax, pcxtexture
-	       _asm add   al,  byte ptr u
-	       _asm add   ah,  byte ptr v
-	       _asm mov   ebx, eax
-           _asm mov   edi, screenbuffer
-	       _asm and   bx,  word ptr mask2
-	       _asm mov   dx,  word ptr fu_lo
-	       _asm shl   edx, 16
-	       _asm mov   dh,  byte ptr dv_hi
-		   _asm mov   dl,  byte ptr du_hi
-	       _asm mov   ax,  word ptr fv_lo
-	       _asm shl   eax, 16
-
+	tex_u_acc = (((unsigned int) (unsigned short) fu_lo) << 16);
+	tex_v_acc = (((unsigned int) (unsigned short) fv_lo) << 16);
 }
 /*#pragma aux initfasttex1 = \
                "mov   eax, pcxtexture" \
@@ -428,13 +404,7 @@ void            initfasttex1()
 
 void VBE_MemSet()
 {
-               _asm mov   ecx,VBE_Count
-               _asm mov   eax,VBE_Color
-               _asm mov   edi,screenbuffer
-               _asm loopje: mov byte ptr gs:[ecx+edi],al
-               _asm dec   ecx
-               _asm jnz   loopje
-
+	memset(screenbuffer, VBE_Color, VBE_Count);
 }
 /*
 #pragma aux VBE_MemSet = \
@@ -449,17 +419,7 @@ void VBE_MemSet()
 
 void            initfasttex2()
 {
-			_asm mov   si,  word ptr du_lo
-			_asm shl   esi, 16
-			_asm  mov   cx,  word ptr dv_lo
-			_asm	shl   ecx, 16
-			_asm  mov   cx,  word ptr run
-			_asm push  ebp
-			_asm xor   ebp, ebp
-			_asm mov   bp, cx
-			_asm xor   cx, cx
-			_asm add   edi, ebp
-			_asm neg   ebp
+	/* Kept for API compatibility with legacy call sites. */
 }
 /*
 #pragma aux initfasttex2 = \
@@ -480,19 +440,26 @@ void            initfasttex2()
 
 void  fasttexloop0(void)
 {
-	_asm ml5: and bx,word ptr mask2
-	_asm or bx,word ptr mipmask
-	_asm mov   al, byte ptr [ebx]
-	_asm add   edx, esi
-	_asm adc   bl,  dl
-	_asm add   eax, ecx
-	_asm adc   bh,  dh
-	_asm mov byte ptr gs:[edi+ebp],al
-	_asm inc   ebp
-	_asm jnz   ml5
-	_asm pop   ebp
-	_asm mov   screenbuffer, edi
+	int i;
+	int tex_u = u & 0xFF;
+	int tex_v = v & 0xFF;
+	unsigned int step_u = (unsigned int) (unsigned short) du_lo;
+	unsigned int step_v = (unsigned int) (unsigned short) dv_lo;
+	for (i = 0; i < run; ++i) {
+		unsigned int tex_index = (((unsigned int) tex_v << 8) | (unsigned int) tex_u);
+		tex_index = (tex_index & (unsigned int) mask2) | (unsigned int) mipmask;
+		screenbuffer[i] = pcxtexture[tex_index];
 
+		tex_u_acc += step_u;
+		tex_v_acc += step_v;
+		tex_u += (int) (signed char) du_hi + (int) ((tex_u_acc >> 16) & 1U);
+		tex_v += (int) (signed char) dv_hi + (int) ((tex_v_acc >> 16) & 1U);
+		tex_u_acc &= 0xFFFFU;
+		tex_v_acc &= 0xFFFFU;
+		tex_u &= 0xFF;
+		tex_v &= 0xFF;
+	}
+	screenbuffer += run;
 }
 /*
 #pragma aux fasttexloop0 = \
@@ -513,18 +480,7 @@ modify[eax ebx ecx edx esi edi ebp];
 
 void  fasttexloop1(void)
 {
-	_asm ml5: and bx,word ptr mask2
-	_asm or bx,word ptr mipmask
-	_asm mov   al, byte ptr [ebx]
-	_asm add   edx, esi
-	_asm adc   bl,  dl
-	_asm add   eax, ecx
-	_asm adc   bh,  dh
-	_asm mov [edi+ebp],al
-	_asm inc   ebp
-	_asm jnz   ml5
-	_asm pop   ebp
-	_asm mov   screenbuffer, edi
+	fasttexloop0();
 }
 /*
 #pragma aux fasttexloop1 = \
@@ -910,51 +866,9 @@ VGA_DrawSpans(void)
 
 //#ifdef _RAWASSEMBLY
 
-					// BEGIN initfasttex1();
-
-					_asm pusha
-					_asm mov   eax, pcxtexture
-				   _asm add   al,  byte ptr u
-				   _asm add   ah,  byte ptr v
-				   _asm mov   ebx, eax
-				   _asm mov   edi, screenbuffer
-				   _asm and   bx,  word ptr mask2
-				   _asm mov   dx,  word ptr fu_lo
-				   _asm shl   edx, 16
-				   _asm mov   dh,  byte ptr dv_hi
-				   _asm mov   dl,  byte ptr du_hi
-				   _asm mov   ax,  word ptr fv_lo
-				   _asm shl   eax, 16
-					// END initfasttex1();
-					//BEGIN initfasttex2();
-					_asm mov   si,  word ptr du_lo
-					_asm shl   esi, 16
-					_asm  mov   cx,  word ptr dv_lo
-					_asm	shl   ecx, 16
-					_asm  mov   cx,  word ptr run
-					_asm push  ebp
-					_asm xor   ebp, ebp
-					_asm mov   bp, cx
-					_asm xor   cx, cx
-					_asm add   edi, ebp
-					_asm neg   ebp
-					//END initfasttex2();
-                    //BEGIN fasttexloop1();
-					_asm ml5: and bx,word ptr mask2
-					_asm or bx,word ptr mipmask
-					_asm mov   al, byte ptr [ebx]
-					_asm add   edx, esi
-					_asm adc   bl,  dl
-					_asm add   eax, ecx
-					_asm adc   bh,  dh
-					_asm mov [edi+ebp],al
-					_asm inc   ebp
-					_asm jnz   ml5
-					_asm pop   ebp
-					_asm mov   screenbuffer, edi
-					//END fasttexloop1();
-
-					_asm popa
+					initfasttex1();
+					initfasttex2();
+					fasttexloop1();
 
 
 					//deel2();
@@ -1007,51 +921,9 @@ VGA_DrawSpans(void)
                     //fasttexloop1();
 					//memset (screenbuffer,0,run);
 					//screenbuffer += run;//pspan->count;
-								// BEGIN initfasttex1();
-					
-					_asm pusha
-					_asm mov   eax, pcxtexture
-				   _asm add   al,  byte ptr u
-				   _asm add   ah,  byte ptr v
-				   _asm mov   ebx, eax
-				   _asm mov   edi, screenbuffer
-				   _asm and   bx,  word ptr mask2
-				   _asm mov   dx,  word ptr fu_lo
-				   _asm shl   edx, 16
-				   _asm mov   dh,  byte ptr dv_hi
-				   _asm mov   dl,  byte ptr du_hi
-				   _asm mov   ax,  word ptr fv_lo
-				   _asm shl   eax, 16
-					// END initfasttex1();
-					//BEGIN initfasttex2();
-					_asm mov   si,  word ptr du_lo
-					_asm shl   esi, 16
-					_asm  mov   cx,  word ptr dv_lo
-					_asm	shl   ecx, 16
-					_asm  mov   cx,  word ptr run
-					_asm push  ebp
-					_asm xor   ebp, ebp
-					_asm mov   bp, cx
-					_asm xor   cx, cx
-					_asm add   edi, ebp
-					_asm neg   ebp
-					//END initfasttex2();
-                    //BEGIN fasttexloop1();
-					_asm sml5: and bx,word ptr mask2
-					_asm or bx,word ptr mipmask
-					_asm mov   al, byte ptr [ebx]
-					_asm add   edx, esi
-					_asm adc   bl,  dl
-					_asm add   eax, ecx
-					_asm adc   bh,  dh
-					_asm mov [edi+ebp],al
-					_asm inc   ebp
-					_asm jnz   sml5
-					_asm pop   ebp
-					_asm mov   screenbuffer, edi
-					//END fasttexloop1();
-
-					_asm popa
+					initfasttex1();
+					initfasttex2();
+					fasttexloop1();
 
 //#endif
 
